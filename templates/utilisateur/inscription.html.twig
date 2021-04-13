@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription!
+{% endblock %}
+
+{% block body %}
+
+	<div class="col-5 text-center mx-auto">
+    <h1>Inscription</h1>
+		{{ form_start(formUtilisateur, {'attr' : {'novalidate' : 'novalidate' }}) }}
+
+		{{ form_row(formUtilisateur.nom)}}
+		{{ form_row(formUtilisateur.prenom)}}
+		{{ form_row(formUtilisateur.roles)}}
+		{{ form_row(formUtilisateur.email)}}
+		{{ form_row(formUtilisateur.password)}}
+        {{ form_row(formUtilisateur.formation)}}
+		{{ form_row(formUtilisateur.submit)}}
+
+		{{ form_end(formUtilisateur) }}
+
+	</div>
+	<div>
+		<a href="{{ path ("accueil")}}">Revenir à l'accueil</a>
+	</div>
+{% endblock %}
