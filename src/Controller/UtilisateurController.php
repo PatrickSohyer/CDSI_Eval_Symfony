@@ -6,6 +6,7 @@ use App\Entity\Utilisateur;
 use App\Form\EditProfilType;
 use App\Form\UtilisateurType;
 use Doctrine\Persistence\ObjectManager;
+use App\Repository\UtilisateurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,6 +62,18 @@ class UtilisateurController extends AbstractController
 
         return $this->render('utilisateur/editProfil.html.twig', [
             "formEditUser" => $formEditUser->createView()
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @Route("/utilisateur", name="liste_utilisateur")
+     */
+    public function index(UtilisateurRepository $repUtilisateur): Response
+    {
+        $listUtilisateur = $repUtilisateur->findAll();
+        return $this->render('utilisateur/listUtilisateur.html.twig', [
+            "listUtilisateur" => $listUtilisateur
         ]);
     }
 

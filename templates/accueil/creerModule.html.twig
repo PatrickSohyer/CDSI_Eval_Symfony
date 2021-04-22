@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Module
+{% endblock %}
+{% block navbar %}{% endblock %}
+
+{% block body %}
+
+	<div class="text-center mt-5">
+		<h1>Ajouter un module</h1>
+	</div>
+
+	<div class="col-3 mx-auto">
+		{{ form_start(formModule, {'attr' : {'novalidate' : 'novalidate' }}) }}
+
+		{{ form_row(formModule.nom)}}
+		{{ form_row(formModule.nbHeures)}}
+		{{ form_row(formModule.formation)}}
+
+		<div class="text-center">
+			{{ form_row(formModule.submit)}}
+		</div>
+
+		{{ form_end(formModule) }}
+
+	</div>
+
+{% endblock %}

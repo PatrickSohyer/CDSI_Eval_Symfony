@@ -1,29 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formation{% endblock %}
+{% block title %}Formation
+{% endblock %}
+{% block navbar %}{% endblock %}
 
 {% block body %}
 
-	<div class="col-5 text-center mx-auto">
+	<div class="text-center mt-5">
+		<h1>Ajouter une Formation</h1>
+	</div>
+
+	<div class="col-3 mx-auto">
 		{{ form_start(formForma, {'attr' : {'novalidate' : 'novalidate' }}) }}
 
 		{{ form_row(formForma.nom)}}
 		{{ form_row(formForma.dateDebut)}}
 		{{ form_row(formForma.dateFin)}}
-		
-		<button type="submit" class="btn btn-primary">
-			{% if editMode %}
-				Enregistrer les modifications
-			{% else %}
-				Ajouter la formation
-			{% endif %}
-		</button>
+		<div class="text-center">
+			{{ form_row(formForma.submit)}}
+		</div>
 
 		{{ form_end(formForma) }}
 
-	</div>
-	<div>
-		<a href="{{ path ("accueil")}}">Revenir à l'accueil</a>
 	</div>
 
 {% endblock %}

@@ -25,7 +25,7 @@ class Seance
     private $dateSeance;
 
     /**
-     * @ORM\Column(type="decimal", precision=1, scale=1)
+     * @ORM\Column(type="decimal", precision=5, scale=2)
      */
     private $duree;
 

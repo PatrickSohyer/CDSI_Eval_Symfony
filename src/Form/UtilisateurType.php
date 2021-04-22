@@ -45,7 +45,6 @@ class UtilisateurType extends AbstractType
                     'ROLE_ADMIN' => 'ROLE_ADMIN',
                 ],
                 'multiple' => true,
-                'expanded' => true,
                 'required' => true
             ])
             ->add(
@@ -74,7 +73,8 @@ class UtilisateurType extends AbstractType
                 'class' => Formation::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => false,
+                'required' => true
             ]);
     }
 

@@ -7,7 +7,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-5 mx-auto">
+			<div class="col-3 mx-auto">
 				<form method="post">
 					{% if error %}
 						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -21,10 +21,8 @@
 						</div>
 					{% endif %}
 
-					<h1 class="h3 mb-3 mt-3 font-weight-normal text-center">Veuillez vous connecter</h1>
-					<label for="inputEmail">Email</label>
+					<h1 class="h3 mb-3 mt-3 font-weight-normal text-center">Se connecter</h1>
 					<input type="email" value="{{ last_username }}" placeholder="Adresse Email" name="email" id="inputEmail" class="form-control" required autofocus>
-					<label class="mt-2" for="inputPassword">Mot de passe</label>
 					<input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control" required>
 
 					<input

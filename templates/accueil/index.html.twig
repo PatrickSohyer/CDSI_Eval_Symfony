@@ -1,40 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!
+{% block title %}Accueil
 {% endblock %}
 
+{% block navbar %}{% endblock %}
+
 {% block body %}
+
+
+	{# Partie ADMINISTRATEUR #}
 
 	<div class="container">
 		<div class="row">
 			{% if is_granted("ROLE_ADMIN") %}
-            {% for forma in listFormation %}     
-				<div class="col-4 mt-4">
-					<div class="card" style="width: 18rem;">
-						<div class="card-header">
-							{{ forma.nom }}
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">Début le {{ forma.dateDebut | date('d/m/Y')}}</li>
-							<li class="list-group-item">Fin le {{ forma.dateFin | date('d/m/Y')}}</li>
-						</ul>
-						<div class="card-body text-center">
-							<a href="{{ path ('formation_id', {id: forma.id}) }}" class="card-link">Détails de la formation</a>
+				{% for forma in listFormation %}
+					<div class="col-4 mt-4">
+						<div class="card" style="width: 18rem;">
+							<div class="card-header">
+								{{ forma.nom }}
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">Début le
+									{{ forma.dateDebut | date('d/m/Y')}}</li>
+								<li class="list-group-item">Fin le
+									{{ forma.dateFin | date('d/m/Y')}}</li>
+							</ul>
+							<div class="card-body text-center">
+								<a href="{{ path ('formation_id', {id: forma.id}) }}" class="card-link" style="text-decoration: none;">Détails de la formation</a>
+								<br>
+								<a href="{{ path ('edit_formation', {id: forma.id}) }}" class="card-link" style="text-decoration: none;">Editer la formation</a>
+							</div>
 						</div>
 					</div>
-				</div>
-            {% endfor %}
-			</div>
-		</div>
-	{% endif %}
-	{% for forma in listFormation %}
-		{% for user in forma.utilisateurs %}
-			{% if app.user.id == user.id and is_granted("ROLE_FORMATEUR") == "ROLE_FORMATEUR" %}
-				<h2>{{ forma.nom }}</h2>
-			{% elseif app.user.id == user.id and is_granted("ROLE_ETUDIANT") == "ROLE_ETUDIANT"  %}
-				<h3>{{ forma.dateDebut | date('d/m/Y') }}</h3>
+				{% endfor %}
 			{% endif %}
-		{% endfor %}
-	{% endfor %}
+		</div>
+	</div>
+
+	{# Fin de la partie Administrateur #}
+
+	<div class="container">
+		<div class="row">
+			{% for forma in listFormation %}
+				{% for user in forma.utilisateurs %}
+					{% if app.user.id == user.id and is_granted("ROLE_FORMATEUR") == "ROLE_FORMATEUR" %}
+						<div class="col-4 mt-4">
+							<div class="card" style="width: 18rem;">
+								<div class="card-header">
+									{{ forma.nom }}
+								</div>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">Début le
+										{{ forma.dateDebut | date('d/m/Y')}}</li>
+									<li class="list-group-item">Fin le
+										{{ forma.dateFin | date('d/m/Y')}}</li>
+								</ul>
+								<div class="card-body text-center">
+									<a href="{{ path ('formation_id', {id: forma.id}) }}" class="card-link">Détails de la formation</a>
+								</div>
+							</div>
+						</div>
+					{% elseif app.user.id == user.id and is_granted("ROLE_ETUDIANT") == "ROLE_ETUDIANT"  %}
+						<h1>{{forma.nom}}</h1>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Modules</th>
+									<th scope="col">Nombre d'heures</th>
+									<th scope="col" class="text-center">Détails du module</th>
+								</tr>
+							</thead>
+							{% for module in forma.modules | sort((a, b) => a.nom <=> b.nom)  %}
+								<tbody>
+									<tr>
+										<td>{{ module.nom }}</td>
+										<td>{{ module.nbHeures | number_format(2, 'h', ',') }}</td>
+										<td class="text-center">
+											<a href="{{ path ('module_id', {id: module.id}) }}">
+												<i class="fas fa-book-open"></i>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							{% endfor %}
+						</table>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
 
 {% endblock %}

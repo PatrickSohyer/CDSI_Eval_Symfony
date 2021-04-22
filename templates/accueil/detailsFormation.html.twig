@@ -3,38 +3,54 @@
 {% block title %}Formation
 {% endblock %}
 
+{% block navbar %}{% endblock %}
+
 {% block body %}
 
-	<div class="container">
-		<div class="row">
-			<div class="col-10 mt-5">
-				<h1 class="text-center">{{ formation.nom }}</h1>
 
-				<table class="table mt-3">
+	{% if is_granted("ROLE_FORMATEUR") == "ROLE_FORMATEUR" %}
+		<div class="container">
+			<div class="row">
+				<h1 class="text-center mt-3 mb-4" style="border: solid;">{{ formation.nom }}</h1>
+				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col">id</th>
-							<th scope="col">Nom</th>
-							<th scope="col">Prénom</th>
-							<th scope="col">Email</th>
+							<th scope="col" class="text-center">Modules</th>
+							<th scope="col" class="text-center">Nombre d'heures</th>
+							<th scope="col" class="text-center">Détails du module</th>
+							{% if is_granted("ROLE_ADMIN") %}
+								<th scope="col" class="text-center">Éditer le module</th>
+							{% endif %}
 						</tr>
 					</thead>
 					{% for forma in listFormation %}
-						{% for user in forma.utilisateurs %}
-							{% if formation.id == forma.id %}
-								<tbody>
-									<tr>
-										<th scope="row">{{user.id}}</th>
-										<td>{{user.nom}}</td>
-										<td>{{user.prenom}}</td>
-										<td>{{user.email}}</td>
-									</tr>
-								</tbody>
-							{% endif %}
+						{% for module in forma.modules | sort((a, b) => a.nom <=> b.nom)  %}
+							<div class="col-4">
+								{% if formation.id == module.formation.id %}
+									<tbody>
+										<tr>
+											<td class="text-center">{{ module.nom}}</td>
+											<td class="text-center">{{ module.nbHeures | number_format(2, 'h', ',') }}</td>
+											<td class="text-center">
+												<a href="{{ path ('module_id', {id: module.id}) }}">
+													<i class="fas fa-book-open"></i>
+												</a>
+											</td>
+											{% if is_granted("ROLE_ADMIN") %}
+												<td class="text-center">
+													<a href="{{ path ('edit_module', {id: module.id}) }}">
+														<i class="fas fa-edit"></i>
+													</a>
+												</td>
+											{% endif %}
+										</tr>
+									</tbody>
+								{% endif %}
+							</div>
 						{% endfor %}
 					{% endfor %}
 				</table>
 			</div>
 		</div>
-	</div>
+	{% endif %}
 {% endblock %}

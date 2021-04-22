@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formation
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_FORMATEUR') %}
+
+	<div class="col-4 mx-auto">
+
+	<h1 class="text-center">Ajouter une Séance</h1>
+		{{ form_start(formSeance, {'attr' : {'novalidate' : 'novalidate' }}) }}
+
+		{{ form_row(formSeance.dateSeance)}}
+		{{ form_row(formSeance.duree)}}
+		{{ form_row(formSeance.titre)}}
+		{{ form_row(formSeance.contenu)}}
+		{{ form_row(formSeance.fichier)}}
+
+		<button type="submit" class="btn btn-primary">
+			{% if editMode %}
+				Enregistrer les modifications
+			{% else %}
+				Ajouter la séance
+			{% endif %}
+		</button>
+
+		{{ form_end(formSeance) }}
+
+	</div>
+{% endif %}
+
+	<div class="container">
+		<div class="row">
+			<h1 class="text-center mt-3 mb-4" style="border: solid;">Liste des séances dans le module {{ module.nom }}</h1>
+			{% for mod in listModule %}
+				{% for seance in mod.seances %}
+					<div class="col-12">
+						{% if module.id == seance.module.id %}
+							<div class="accordion" id="accordionExample">
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="heading{{seance.id}}">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{seance.id}}" aria-expanded="true" aria-controls="collapseOne">
+											{{ seance.titre}}
+										</button>
+									</h2>
+									<div id="collapse{{seance.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{seance.id}}" data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<p>Date de la séance :
+												{{ seance.dateSeance | date('d/m/Y') }}</p>
+											<p>Durée de la séance :
+												{{ seance.duree | number_format(2, 'h', ',') }}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
