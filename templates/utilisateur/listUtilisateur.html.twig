@@ -13,25 +13,27 @@
 				<table class="table mt-3">
 					<thead>
 						<tr>
-							<th scope="col">id</th>
-							<th scope="col">Nom</th>
-							<th scope="col">Prénom</th>
-							<th scope="col">Email</th>
-                            <th scope="col">Formation</th>
-							<th scope="col">Role</th>
-                            <th scope="col">modifier</th>
+							<th scope="col" class="text-center">id</th>
+							<th scope="col" class="text-center">Nom</th>
+							<th scope="col" class="text-center">Prénom</th>
+							<th scope="col" class="text-center">Email</th>
+                            <th scope="col" class="text-center">Formation</th>
+							<th scope="col" class="text-center">Role</th>
+                            <th scope="col" class="text-center">Modifier</th>
+							<th scope="col" class="text-center">Supprimer</th>
 						</tr>
 					</thead>
-					{% for user in listUtilisateur %}
+					{% for user in listUtilisateur |sort |reverse %}
 								<tbody>
 									<tr>
-										<th scope="row">{{user.id}}</th>
-										<td>{{user.nom}}</td>
-										<td>{{user.prenom}}</td>
-										<td>{{user.email}}</td>
-                                        <td>{{ user.formation | length }}</td>
-										<td>{{ user.roles[0] }}</td>
-                                        <td><a href="{{ path("edit_profil", {id: user.id})}}"><i class="fas fa-user-edit"></i></a></td>
+										<th class="text-center" scope="row">{{user.id}}</th>
+										<td class="text-center">{{user.nom}}</td>
+										<td class="text-center">{{user.prenom}}</td>
+										<td class="text-center">{{user.email}}</td>
+                                        <td class="text-center">{{ user.formation | length }}</td>
+										<td class="text-center">{{ user.roles[0] }}</td>
+                                        <td class="text-center"><a href="{{ path("edit_profil", {id: user.id})}}"><i class="fas fa-user-edit text-dark"></i></a></td>
+										<td class="text-center"><a href="{{ path("supprimer_utilisateur", {id: user.id})}}"><i class="fas fa-trash text-dark"></i></a></td>
 									</tr>
 								</tbody>
 					{% endfor %}

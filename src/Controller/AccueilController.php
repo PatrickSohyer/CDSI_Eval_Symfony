@@ -98,6 +98,17 @@ class AccueilController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @Route("/supprimerFormation/{id}", name="supprimer_formation")
+     */
+    public function supprimerUtilisateur(Formation $formation, ObjectManager $manager)
+    {
+        $manager->remove($formation);
+        $manager->flush();
+        return $this->redirectToRoute("accueil");
+    }
+
+    /**
      * Fonction pour ajouter un module
      * @Security("is_granted('ROLE_ADMIN')")
      * @Route("/ajoutModule", name="ajout_module")

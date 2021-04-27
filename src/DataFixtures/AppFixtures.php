@@ -61,6 +61,7 @@ class AppFixtures extends Fixture
                 $module->setNbHeures($faker->numberBetween(10, 50));
                 $module->setFormation($forma);
                 $manager->persist($module);
+                // Fixtures pour créer des séances
                 for ($k = 1; $k <= mt_rand(1, 10); $k++) {
                     $seance = new Seance;
                     $seance->setDateSeance($faker->dateTimeBetween('+100 days', '+3 years'));
@@ -73,6 +74,7 @@ class AppFixtures extends Fixture
             }
         }
 
+        // Compte administrateur
         $utilisateurAdmin = new Utilisateur;
         $utilisateurAdmin->setEmail('gthierry@gmail.com');
         $utilisateurAdmin->setRoles(['ROLE_ADMIN']);

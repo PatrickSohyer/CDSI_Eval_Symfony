@@ -7,7 +7,7 @@
 
 {% block body %}
 
-	<div class="col-3 mx-auto mt-5">
+	<div class="col-3 mx-auto mt-3">
 		<div class="text-center">
 			<h1>Inscription</h1>
 		</div>
@@ -19,7 +19,9 @@
 		{{ form_row(formUtilisateur.email)}}
 		{{ form_row(formUtilisateur.password)}}
 		{{ form_row(formUtilisateur.formation)}}
-		{{ form_row(formUtilisateur.submit)}}
+		<div class="text-center">
+			{{ form_row(formUtilisateur.submit)}}
+		</div>
 
 		{{ form_end(formUtilisateur) }}
 

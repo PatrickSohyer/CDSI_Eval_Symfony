@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -34,16 +35,40 @@ class Utilisateur implements UserInterface
 
     /**
      * @var string The hashed password
+     * @Assert\Length(
+     *          min = 4,
+     *          max = 20,
+     *          minMessage = "Votre mot de passe doit contenir {{ limit }} caractère minimum",
+     *          maxMessage = "Votre mot de passe ne doit pas contenir plus de {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
+     * @Assert\Length(
+     *          min = 2,
+     *          max = 25,
+     *          minMessage = "Votre nom doit contenir {{ limit }} caractère minimum",
+     *          maxMessage = "Votre nom ne doit pas contenir plus de {{ limit }} caractères"
+     * )
+     * @Assert\NotBlank(
+     *          message = "Le nom ne peut pas être vide"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
+     * @Assert\Length(
+     *          min = 2,
+     *          max = 25,
+     *          minMessage = "Votre prenom doit contenir {{ limit }} caractère minimum",
+     *          maxMessage = "Votre nom ne doit pas contenir plus de {{ limit }} caractères"
+     * )
+     * @Assert\NotBlank(
+     *          message = "Le prenom ne peut pas être vide"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $prenom;

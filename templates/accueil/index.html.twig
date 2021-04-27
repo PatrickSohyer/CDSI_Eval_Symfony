@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="row">
 			{% if is_granted("ROLE_ADMIN") %}
-				{% for forma in listFormation %}
+				{% for forma in listFormation |sort |reverse %}
 					<div class="col-4 mt-4">
 						<div class="card" style="width: 18rem;">
 							<div class="card-header">
@@ -21,14 +21,14 @@
 							</div>
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">Début le
-									{{ forma.dateDebut | date('d/m/Y')}}</li>
+									{{ forma.dateDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</li>
 								<li class="list-group-item">Fin le
-									{{ forma.dateFin | date('d/m/Y')}}</li>
+									{{ forma.dateFin | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</li>
 							</ul>
 							<div class="card-body text-center">
-								<a href="{{ path ('formation_id', {id: forma.id}) }}" class="card-link" style="text-decoration: none;">Détails de la formation</a>
+								<a href="{{ path ('formation_id', {id: forma.id}) }}" class="card-link text-dark">Détails de la formation</a>
 								<br>
-								<a href="{{ path ('edit_formation', {id: forma.id}) }}" class="card-link" style="text-decoration: none;">Editer la formation</a>
+								<a href="{{ path ('edit_formation', {id: forma.id}) }}" class="card-link text-dark mt-2">Editer la formation</a>
 							</div>
 						</div>
 					</div>

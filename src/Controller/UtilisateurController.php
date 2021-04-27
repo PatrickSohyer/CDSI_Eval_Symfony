@@ -27,7 +27,7 @@ class UtilisateurController extends AbstractController
         $utilisateur = new Utilisateur;
 
         $formUtilisateur = $this->createForm(UtilisateurType::class, $utilisateur);
-        $formUtilisateur->add('submit', SubmitType::class, array('label' => 'Inscription'));
+        $formUtilisateur->add('submit', SubmitType::class, array('label' => 'Inscription', 'attr' => ['class' => 'bg-dark text-white mt-3']));
         $formUtilisateur->handleRequest($request);
 
         if ($formUtilisateur->isSubmitted() && $formUtilisateur->isValid()) {
@@ -67,6 +67,17 @@ class UtilisateurController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_ADMIN')")
+     * @Route("/supprimerUtilisateur/{id}", name="supprimer_utilisateur")
+     */
+    public function supprimerUtilisateur(Utilisateur $utilisateur, ObjectManager $manager)
+    {
+        $manager->remove($utilisateur);
+        $manager->flush();
+        return $this->redirectToRoute("liste_utilisateur");
+    }
+
+    /**
+     * @Security("is_granted('ROLE_ADMIN')")
      * @Route("/utilisateur", name="liste_utilisateur")
      */
     public function index(UtilisateurRepository $repUtilisateur): Response
@@ -76,5 +87,4 @@ class UtilisateurController extends AbstractController
             "listUtilisateur" => $listUtilisateur
         ]);
     }
-
 }
