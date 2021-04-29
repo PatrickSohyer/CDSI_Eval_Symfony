@@ -35,12 +35,6 @@ class Utilisateur implements UserInterface
 
     /**
      * @var string The hashed password
-     * @Assert\Length(
-     *          min = 4,
-     *          max = 20,
-     *          minMessage = "Votre mot de passe doit contenir {{ limit }} caractère minimum",
-     *          maxMessage = "Votre mot de passe ne doit pas contenir plus de {{ limit }} caractères"
-     * )
      * @ORM\Column(type="string")
      */
     private $password;

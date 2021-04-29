@@ -44,20 +44,21 @@ class UtilisateurController extends AbstractController
     }
 
     /**
+     * Fonction pour éditer un utilisateur
      * @Security("is_granted('ROLE_ADMIN')")
      * @Route("/editProfil/{id}", name="edit_profil")
      */
     public function editProfil(Utilisateur $utilisateur, Request $request, ObjectManager $manager)
     {
-        $formEditUser = $this->createForm(EditProfilType::class, $utilisateur);
-        $formEditUser->add('submit', SubmitType::class, array('label' => 'Modifier'));
+
+        $formEditUser= $this->createForm(EditProfilType::class, $utilisateur);
+        $formEditUser->add('submit', SubmitType::class, array('label' => 'Modifier utilisateur'));
         $formEditUser->handleRequest($request);
 
         if ($formEditUser->isSubmitted() && $formEditUser->isValid()) {
             $manager->persist($utilisateur);
             $manager->flush();
-            $this->addFlash('message', 'Profil mis à jour');
-            return $this->redirectToRoute("accueil");
+            return $this->redirectToRoute("liste_utilisateur");
         }
 
         return $this->render('utilisateur/editProfil.html.twig', [

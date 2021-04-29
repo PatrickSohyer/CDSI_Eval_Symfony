@@ -3,10 +3,12 @@
 {% block title %}Inscription!
 {% endblock %}
 
+{% block navbar %}{% endblock %}
+
 {% block body %}
 
 	<div class="col-5 text-center mx-auto">
-    <h1>Inscription</h1>
+    <h1>Modifier utilisateur</h1>
 		{{ form_start(formEditUser, {'attr' : {'novalidate' : 'novalidate' }}) }}
 
 		{{ form_row(formEditUser.nom)}}

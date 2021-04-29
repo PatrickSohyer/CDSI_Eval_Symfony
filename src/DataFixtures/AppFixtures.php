@@ -47,8 +47,9 @@ class AppFixtures extends Fixture
             $manager->persist($userEleve);
         }
 
+        
         // Fixtures pour créer des formations
-        for ($i = 1; $i < 5; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             $forma = new Formation;
             $forma->setNom($faker->words(5, true));
             $forma->setDateDebut($faker->dateTimeBetween('+0 days', '+1 years'));
@@ -63,9 +64,13 @@ class AppFixtures extends Fixture
                 $manager->persist($module);
                 // Fixtures pour créer des séances
                 for ($k = 1; $k <= mt_rand(1, 10); $k++) {
+                    $randomHour = mt_rand(1,7);
+                    $randomMinute = mt_rand(1, 59);
+                    if ($randomMinute < 10) $randomMinute = '0'.$randomMinute;
+                    $random = $randomHour.'.'.$randomMinute;
                     $seance = new Seance;
                     $seance->setDateSeance($faker->dateTimeBetween('+100 days', '+3 years'));
-                    $seance->setDuree($faker->randomFloat(2, 1, 4));
+                    $seance->setDuree($random);
                     $seance->setTitre($faker->words(3, true));
                     $seance->setContenu($faker->paragraphs(2, true));
                     $seance->setModule($module);
@@ -76,7 +81,7 @@ class AppFixtures extends Fixture
 
         // Compte administrateur
         $utilisateurAdmin = new Utilisateur;
-        $utilisateurAdmin->setEmail('gthierry@gmail.com');
+        $utilisateurAdmin->setEmail('gthiery@gmail.com');
         $utilisateurAdmin->setRoles(['ROLE_ADMIN']);
         $utilisateurAdmin->setNom('Thiery');
         $utilisateurAdmin->setPrenom('Guillaume');
