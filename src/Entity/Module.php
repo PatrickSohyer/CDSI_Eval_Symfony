@@ -39,6 +39,7 @@ class Module
 
     /**
      * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="module")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $seances;
 

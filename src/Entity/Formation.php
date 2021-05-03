@@ -43,6 +43,7 @@ class Formation
 
     /**
      * @ORM\OneToMany(targetEntity=Module::class, mappedBy="formation", orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $modules;
 

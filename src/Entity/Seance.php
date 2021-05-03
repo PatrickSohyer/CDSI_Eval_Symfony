@@ -46,6 +46,7 @@ class Seance
 
     /**
      * @ORM\ManyToOne(targetEntity=Module::class, inversedBy="seances")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $module;
 
