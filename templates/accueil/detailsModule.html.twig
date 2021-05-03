@@ -7,35 +7,31 @@
 
 {% block body %}
 
-{% if is_granted('ROLE_FORMATEUR') %}
+	{% if is_granted('ROLE_FORMATEUR') %}
 
-	<div class="col-4 mx-auto">
+		<div class="col-4 mx-auto">
 
-	<h1 class="text-center">Ajouter une Séance</h1>
-		{{ form_start(formSeance, {'attr' : {'novalidate' : 'novalidate' }}) }}
+			<h1 class="text-center">Ajouter une Séance</h1>
+			{{ form_start(formSeance, {'attr' : {'novalidate' : 'novalidate' }}) }}
 
-		{{ form_row(formSeance.dateSeance)}}
-		{{ form_row(formSeance.duree)}}
-		{{ form_row(formSeance.titre)}}
-		{{ form_row(formSeance.contenu)}}
-		{{ form_row(formSeance.fichier)}}
+			{{ form_row(formSeance.dateSeance)}}
+			{{ form_row(formSeance.duree)}}
+			{{ form_row(formSeance.titre)}}
+			{{ form_row(formSeance.contenu)}}
+			{{ form_row(formSeance.fichier)}}
+			<div class="text-center">
+				{{ form_row(formSeance.submit)}}
+			</div>
 
-		<button type="submit" class="btn btn-primary">
-			{% if editMode %}
-				Enregistrer les modifications
-			{% else %}
-				Ajouter la séance
-			{% endif %}
-		</button>
+			{{ form_end(formSeance) }}
 
-		{{ form_end(formSeance) }}
-
-	</div>
-{% endif %}
+		</div>
+	{% endif %}
 
 	<div class="container">
 		<div class="row">
-			<h1 class="text-center mt-3 mb-4" style="border: solid;">Liste des séances dans le module {{ module.nom }}</h1>
+			<h1 class="text-center mt-3 mb-4" style="border: solid;">Liste des séances dans le module
+				{{ module.nom }}</h1>
 			{% for mod in listModule %}
 				{% for seance in mod.seances %}
 					<div class="col-12">
@@ -53,6 +49,17 @@
 												{{ seance.dateSeance | date('d/m/Y') }}</p>
 											<p>Durée de la séance :
 												{{ seance.duree | number_format(2, 'h', ',') }}</p>
+											<p>Titre de la séance :
+												{{ seance.titre }}</p>
+											<p>Titre de la séance :
+												{{ seance.contenu }}</p>
+											<p>Fichier lié la séance :
+												<a href="/uploads/fichiers/{{ seance.fichier }}">{{ seance.fichier }}</a>
+											</p>
+											{% if is_granted("ROLE_FORMATEUR") %}
+												<a href="{{ path ('supprimer_seance', { id: seance.id}) }}">
+													Supprimer la séance</a>
+											{% endif %}
 										</div>
 									</div>
 								</div>

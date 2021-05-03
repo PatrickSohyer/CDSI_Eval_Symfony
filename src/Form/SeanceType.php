@@ -44,10 +44,7 @@ class SeanceType extends AbstractType
             ->add('fichier', FileType::class, [
                 'required' => false,
                 'mapped' => false,
-                'label' => 'Ajouter un support de cours',
-                "constraints" => [
-                    new Image(["maxSize" => "2048k"])
-                ]
+                'label' => 'Ajouter un support de cours'
             ])
         ;
     }

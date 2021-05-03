@@ -3,6 +3,11 @@
 {% block title %}Inscription!
 {% endblock %}
 
+{% block css %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/assets/js/chosen/chosen.min.css">
+{% endblock %}
+
 {% block navbar %}{% endblock %}
 
 {% block body %}
@@ -26,4 +31,13 @@
 		{{ form_end(formUtilisateur) }}
 
 	</div>
+{% endblock %}
+{% block js %}
+	{{ parent() }}
+	<script src="/assets/js/chosen/chosen.jquery.js"></script>
+	<script>
+		$(document).ready(function () {
+$('.chzn-select').chosen();
+});
+	</script>
 {% endblock %}

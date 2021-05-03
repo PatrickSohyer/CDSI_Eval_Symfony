@@ -5,9 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SeanceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *              collectionOperations={"get", "post"},
+ *              itemOperations={"get", "patch"},
+ *              normalizationContext={"groups"={"seance:read"}},
+ *              denormalizationContext={"groups"={"seance:write"}}
+ * )
  * @ORM\Entity(repositoryClass=SeanceRepository::class)
  */
 class Seance
@@ -16,26 +22,31 @@ class Seance
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"module:read", "seance:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"module:read", "seance:read"})
      */
     private $dateSeance;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Groups({"module:read", "seance:read"})
      */
     private $duree;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"module:read", "seance:read", "seance:write"})
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"module:read", "seance:read", "seance:write"})
      */
     private $contenu;
 

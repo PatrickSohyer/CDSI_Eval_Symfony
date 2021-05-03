@@ -20,6 +20,7 @@
 							<th scope="col" class="text-center">Détails du module</th>
 							{% if is_granted("ROLE_ADMIN") %}
 								<th scope="col" class="text-center">Éditer le module</th>
+								<th scope="col" class="text-center">Supprimer le module</th>
 							{% endif %}
 						</tr>
 					</thead>
@@ -40,6 +41,11 @@
 												<td class="text-center">
 													<a href="{{ path ('edit_module', {id: module.id}) }}">
 														<i class="fas fa-edit"></i>
+													</a>
+												</td>
+												<td class="text-center">
+													<a href="{{ path ('supprimer_module', {id: module.id}) }}">
+														<i class="fas fa-trash"></i>
 													</a>
 												</td>
 											{% endif %}

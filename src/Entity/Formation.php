@@ -7,9 +7,15 @@ use App\Repository\FormationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *              collectionOperations={"get"},
+ *              itemOperations={"get"},
+ *              normalizationContext={"groups"={"formation:read"}},
+ *              denormalizationContext={"groups"={"formation:write"}}
+ * )
  * @ORM\Entity(repositoryClass=FormationRepository::class)
  */
 class Formation
@@ -18,21 +24,25 @@ class Formation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"formation:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"formation:read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"formation:read"})
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"formation:read"})
      */
     private $dateFin;
 
@@ -44,6 +54,7 @@ class Formation
     /**
      * @ORM\OneToMany(targetEntity=Module::class, mappedBy="formation", orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Groups({"formation:read"})
      */
     private $modules;
 

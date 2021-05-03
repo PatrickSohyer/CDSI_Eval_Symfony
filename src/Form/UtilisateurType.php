@@ -73,8 +73,10 @@ class UtilisateurType extends AbstractType
                 'class' => Formation::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
-                'expanded' => false,
-                'required' => true
+                'attr' => [
+                    'class' => 'chzn-select',
+                    'placeholder' => 'Choisir la / les formations'
+                ]
             ]);
     }
 
