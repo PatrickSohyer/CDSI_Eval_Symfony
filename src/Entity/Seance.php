@@ -28,13 +28,13 @@ class Seance
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"module:read", "seance:read"})
+     * @Groups({"module:read", "seance:read", "seance:write"})
      */
     private $dateSeance;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
-     * @Groups({"module:read", "seance:read"})
+     * @Groups({"module:read", "seance:read", "seance:write"})
      */
     private $duree;
 
@@ -52,6 +52,7 @@ class Seance
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"module:read", "seance:read"})
      */
     private $fichier;
 

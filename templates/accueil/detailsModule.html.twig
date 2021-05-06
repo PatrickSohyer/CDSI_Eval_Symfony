@@ -10,7 +10,6 @@
 	{% if is_granted('ROLE_FORMATEUR') %}
 
 		<div class="col-4 mx-auto">
-
 			<h1 class="text-center">Ajouter une Séance</h1>
 			{{ form_start(formSeance, {'attr' : {'novalidate' : 'novalidate' }}) }}
 
@@ -30,6 +29,11 @@
 
 	<div class="container">
 		<div class="row">
+		{% if is_granted('ROLE_FORMATEUR') %}
+		<p><a href="{{path('formation_id', {id: module.formation.id})}}">Retourner à la liste des modules</a></p>
+		{% else %}
+		<p><a href="{{path('accueil')}}">Retourner à la liste des modules</a></p>
+		{% endif %}
 			<h1 class="text-center mt-3 mb-4" style="border: solid;">Liste des séances dans le module
 				{{ module.nom }}</h1>
 			{% for mod in listModule %}
@@ -46,7 +50,7 @@
 									<div id="collapse{{seance.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{seance.id}}" data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<p>Date de la séance :
-												{{ seance.dateSeance | date('d/m/Y') }}</p>
+												{{ seance.dateSeance | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</p>
 											<p>Durée de la séance :
 												{{ seance.duree | number_format(2, 'h', ',') }}</p>
 											<p>Titre de la séance :

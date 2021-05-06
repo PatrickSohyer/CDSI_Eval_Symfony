@@ -53,9 +53,9 @@
 								</div>
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item">Début le
-										{{ forma.dateDebut | date('d/m/Y')}}</li>
+										{{ forma.dateDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</li>
 									<li class="list-group-item">Fin le
-										{{ forma.dateFin | date('d/m/Y')}}</li>
+										{{ forma.dateFin | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</li>
 								</ul>
 								<div class="card-body text-center">
 									<a href="{{ path ('formation_id', {id: forma.id}) }}" class="card-link">Détails de la formation</a>

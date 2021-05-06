@@ -12,6 +12,7 @@ use App\Repository\ModuleRepository;
 use App\Repository\FormationRepository;
 use Doctrine\Persistence\ObjectManager;
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,6 +45,10 @@ class AccueilController extends AbstractController
      */
     public function formationId(Formation $formation, FormationRepository $repFormation)
     {
+        if(!$formation->getUtilisateurs()->contains($this->getUser()) && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('accueil');
+        }
+        
 
         $listFormation = $repFormation->findAll();
         return $this->render('accueil/detailsFormation.html.twig', [
@@ -150,7 +155,7 @@ class AccueilController extends AbstractController
         if ($formModule->isSubmitted() && $formModule->isValid()) {
             $manager->persist($module);
             $manager->flush();
-            return $this->redirectToRoute("accueil");
+            return $this->redirectToRoute("accueil", ['id' => $module->getFormation()->getId()]);
         }
 
         return $this->render('accueil/creerModule.html.twig', [
@@ -167,7 +172,7 @@ class AccueilController extends AbstractController
     {
         $manager->remove($module);
         $manager->flush();
-        return $this->redirectToRoute("accueil");
+        return $this->redirectToRoute("formation_id", ['id' => $module->getFormation()->getId()]);
     }
 
     /**
@@ -178,6 +183,10 @@ class AccueilController extends AbstractController
     public function moduleId(Module $module, ModuleRepository $repModule, Seance $seance = null, Request $request, ObjectManager $manager, SluggerInterface $slugger, string $fichierDir, $id)
     {
 
+        if(!$module->getFormation()->getUtilisateurs()->contains($this->getUser()) && !$this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('accueil');
+        }
+       
         $seance = new Seance;
         $module = $repModule->find($id);
 
